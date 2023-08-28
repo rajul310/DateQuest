@@ -1,7 +1,6 @@
 package com.app.service;
 
 import java.util.List;
-
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
@@ -9,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.customException.NotFoundException;
+import com.app.dto.AuthRequestDTO;
 import com.app.dto.UserDTO;
 import com.app.entities.User;
 import com.app.repository.IuserRepo;
@@ -60,4 +60,14 @@ public class IuserServiceImpl implements IuserService {
 	            throw new NotFoundException("User with ID " + id + " not found.");
 	        }
 	    }
+
+
+	 @Override
+		public User authenticateUser(AuthRequestDTO request) {
+			User ur = userRepo.findByUserEmailAndUserPassword(request.getEmail(), request.getPassword())
+					.orElseThrow(() -> new NotFoundException("Invalid Email or password"));
+		//	AuthRequestDTO authRespDTO = mapper.map(ur, AuthRequestDTO.class);
+			return ur;
+			
+		}
 }

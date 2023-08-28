@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.app.enums.Status;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,6 +43,7 @@ public class Booking extends BaseEntity {
 	@JoinColumn(name = "package_id")
 	private Packages packageId;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "booking",cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
 	private List<User> users;
 

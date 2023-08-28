@@ -61,5 +61,6 @@ public class Vendor extends BaseEntity {
 	
 	@OneToMany(mappedBy = "vendorId",cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Packages> packages;
+	
 
 }

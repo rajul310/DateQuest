@@ -2,6 +2,7 @@ package com.app.service;
 
 import java.util.List;
 
+import com.app.dto.AuthRequestDTO;
 import com.app.dto.UserDTO;
 import com.app.entities.User;
 
@@ -16,6 +17,9 @@ public interface IuserService {
 	 User getUserById(Long id);
 	 
 	 public User updateUser(Long id, UserDTO updatedUser);
+	 
+	 public User authenticateUser(AuthRequestDTO request);
+	
 	
 	
 	

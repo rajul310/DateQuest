@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.dto.ApiResponseDTO;
+import com.app.dto.AuthRequestDTO;
+import com.app.dto.PackagesDTO;
 import com.app.dto.UserDTO;
 import com.app.entities.Booking;
 import com.app.entities.Packages;
@@ -26,6 +29,7 @@ import com.app.service.IuserService;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
 	@Autowired
@@ -36,6 +40,18 @@ public class UserController {
 	
 	@Autowired
 	private IbookingService bookServ;
+	
+	
+	
+	
+	//sign in user
+	
+	@PostMapping("/signin")
+	public ResponseEntity<?> authenticateUser(@RequestBody @Valid AuthRequestDTO request) {
+		System.out.println("in auth User " + request);
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(userServ.authenticateUser(request));
+		}
 
 	// Get all Packages
 	@GetMapping("/packages")
@@ -61,8 +77,9 @@ public class UserController {
 	
 	@GetMapping("/packages/{activities}")
 	public ResponseEntity<?> getPackagesByActivity(@PathVariable PackagesType activities) {
+		
 	    try {
-	        List<Packages> packages = pkgServ.getPackagesByActivities(activities);
+	        List<PackagesDTO> packages = pkgServ.getPackagesByActivities(activities);
 	        if (!packages.isEmpty()) {
 	            return ResponseEntity.status(HttpStatus.OK).body(packages);
 	        } else {

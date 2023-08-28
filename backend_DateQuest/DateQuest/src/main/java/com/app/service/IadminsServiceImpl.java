@@ -1,13 +1,19 @@
 package com.app.service;
 
+import javax.transaction.Transactional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.app.customException.NotFoundException;
 import com.app.dto.AdminDTO;
+import com.app.dto.AuthRequestDTO;
 import com.app.entities.Admin;
+import com.app.entities.Vendor;
 import com.app.repository.IadminsRepo;
-
+@Service
+@Transactional
 public class IadminsServiceImpl implements IadminsService {
 
 	@Autowired
@@ -37,5 +43,15 @@ public class IadminsServiceImpl implements IadminsService {
 			throw new NotFoundException("Admin with ID " + id + " not found.");
 		}
 	}
+
+	@Override
+	public Admin authenticateAdmin(AuthRequestDTO request) {
+		Admin admin = adminRepo.findByAdminEmailAndAdminPassword(request.getEmail(), request.getPassword())
+				.orElseThrow(() -> new NotFoundException("Invalid Email or password"));
+	//	AuthRequestDTO authRespDTO = mapper.map(admin, AuthRequestDTO.class);
+return admin;
+	}
+	
+	
 
 }

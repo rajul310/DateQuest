@@ -1,10 +1,12 @@
 package com.app.controller;
 
 import com.app.dto.ApiResponseDTO;
+import com.app.dto.AuthRequestDTO;
 import com.app.dto.UserDTO;
 import com.app.dto.VendorDTO;
 import com.app.entities.User;
 import com.app.entities.Vendor;
+import com.app.service.IadminsService;
 import com.app.service.IbookingService;
 import com.app.service.IuserService;
 import com.app.service.IvendorService;
@@ -12,6 +14,7 @@ import com.app.service.IvendorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,19 +30,33 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/admin")
+@CrossOrigin(origins = "http://localhost:3000/admin")
 public class AdminController {
 
 	private final IuserService userServ;
 	private final IbookingService bookServ;
 	private final IvendorService vendorServ;
+	private final IadminsService adminServ;
 
 	@Autowired
-	public AdminController(IuserService userServ, IbookingService bookServ, IvendorService vendorServ) {
+	public AdminController(IuserService userServ, IbookingService bookServ, IvendorService vendorServ, IadminsService adminServ) {
 		this.userServ = userServ;
 		this.bookServ = bookServ;
 		this.vendorServ = vendorServ;
+		this.adminServ = adminServ;
+		
 
+		
 	}
+	
+	//sign in Admin
+	
+	@PostMapping("/signin")
+	public ResponseEntity<?> authenticateUser(@RequestBody @Valid AuthRequestDTO request) {
+		System.out.println("in auth admin " + request);
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(adminServ.authenticateAdmin(request));
+		}
 
 	@GetMapping("/users")
 	public ResponseEntity<?> getAllUsers() {
@@ -196,7 +213,7 @@ public class AdminController {
 	}
 	// add vendor
 
-	@PostMapping("/vendors")
+	@PostMapping("/vendors/")
 	public ResponseEntity<?> addVendor(@RequestBody @Valid VendorDTO newVendor) {
 		try {
 			Vendor addedVendor = vendorServ.addVendor(newVendor);

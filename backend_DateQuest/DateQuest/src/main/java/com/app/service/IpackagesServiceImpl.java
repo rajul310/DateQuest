@@ -1,5 +1,6 @@
 package com.app.service;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -62,10 +63,17 @@ public class IpackagesServiceImpl implements IpackagesService {
         }
     }
 
-	@Override
-	public List<Packages> getPackagesByActivities(PackagesType activities) {
-		return packagesRepo.findByActivities(activities);
-	}
+        public List<PackagesDTO> getPackagesByActivities(PackagesType activities) {
+        List<Packages> packagesList = packagesRepo.findByActivities(activities);
+
+        List<PackagesDTO> packagesDTOList = packagesList.stream()
+                .map(packages -> mapperPkg.map(packages, PackagesDTO.class))
+                .collect(Collectors.toList());
+        return packagesDTOList;
+    }
+
+
+
 
 	
 

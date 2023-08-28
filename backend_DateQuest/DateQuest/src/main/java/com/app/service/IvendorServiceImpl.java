@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.customException.NotFoundException;
+import com.app.dto.AuthRequestDTO;
 import com.app.dto.VendorDTO;
+import com.app.entities.User;
 import com.app.entities.Vendor;
 import com.app.repository.IvendorRepo;
 
@@ -61,4 +63,14 @@ public class IvendorServiceImpl implements IvendorService {
 		}
 	}
 
-}
+//	@Override
+//	public Vendor authenticateVendor(AuthRequestDTO request) {
+////	Vendor vendor = vendorRepo.findByVEmailAndVPassword(request.getEmail(), request.getPassword())
+////					.orElseThrow(() -> new NotFoundException("Invalid Email or password"));
+////		//	AuthRequestDTO authRespDTO = mapper.map(vendor, AuthRequestDTO.class);
+//	return vendor;
+//			
+//		}
+	}
+
+

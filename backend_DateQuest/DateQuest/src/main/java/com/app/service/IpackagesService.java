@@ -18,5 +18,5 @@ public interface IpackagesService {
     
     Packages updatePackages(Long id, PackagesDTO pack);
     
-    List<Packages> getPackagesByActivities(PackagesType activity);
+    List<PackagesDTO> getPackagesByActivities(PackagesType activity);
 }

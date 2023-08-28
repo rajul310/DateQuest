@@ -34,11 +34,11 @@ public class VendorDTO {
 
 	@NotBlank(message = "Vendor email is required")
 	@Email(message = "Invalid email format")
-	@Column(length = 100, nullable = false)
+	@Column( nullable = false)
 	private String vEmail;
 
 	@NotBlank(message = "Vendor password is required")
-	@Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[#@$*]).{5,20})", message = "Invalid password!!!,Password must be Atleast 6 characters long")
+	//@Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[#@$*]).{5,20})", message = "Invalid password!!!,Password must be Atleast 6 characters long")
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String vPassword;
 
@@ -71,5 +71,7 @@ public class VendorDTO {
 
 	@NotBlank(message = "Vendor government ID is required")
 	private String vGovtId;
+	
+
 
 }

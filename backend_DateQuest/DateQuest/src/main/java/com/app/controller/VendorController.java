@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.dto.ApiResponseDTO;
+import com.app.dto.AuthRequestDTO;
 import com.app.dto.PackagesDTO;
 import com.app.dto.VendorDTO;
 import com.app.entities.Booking;
@@ -28,6 +30,7 @@ import com.app.service.IvendorService;
 
 @RestController
 @RequestMapping("/vendors")
+@CrossOrigin(origins = "http://localhost:3000/vendors")
 public class VendorController {
 
 	@Autowired
@@ -38,13 +41,40 @@ public class VendorController {
 	
 	@Autowired
 	private IvendorService vendorServ;
+	
+	
+	
+
+	//sign in vendor
+	
+//	@PostMapping("/signin")
+//	public ResponseEntity<?> authenticateUser(@RequestBody @Valid AuthRequestDTO request) {
+//		System.out.println("in auth Vendor " + request);
+//		return ResponseEntity.status(HttpStatus.OK)
+//				.body(vendorServ.authenticateVendor(request));
+//		}
+	
+	//add vendor
+	@PostMapping("/signup")
+	public ResponseEntity<?> addVendor(@RequestBody @Valid VendorDTO newVendor) {
+		try {
+			Vendor addedVendor = vendorServ.addVendor(newVendor);
+			return ResponseEntity.status(HttpStatus.CREATED).body(addedVendor);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(new ApiResponseDTO("An error occurred while adding the vendor."));
+		}
+	}
+	
 
 	
 	//Add Packages
-	@PostMapping("/addpackages")
+	@PostMapping("/add")
 	public ResponseEntity<?> savePackages(@RequestBody @Valid PackagesDTO transientPackages) {
 		try {
+//			System.out.println("in " +transientPackages);
 			Packages savedPackages = pkgServ.addPackages(transientPackages);
+//			System.out.println("in" +transientPackages);
 			return ResponseEntity.status(HttpStatus.CREATED).body("Packages saved with ID: " + savedPackages.getId());
 		} catch (RuntimeException e) {
 
@@ -53,26 +83,7 @@ public class VendorController {
 		}
 	}
 	
-	//Add Packages by Vendor Id
-//	
-//	 @PostMapping("/{vendorId}/addpackages")
-//	    public ResponseEntity<?> addPackagesByVendorId(@PathVariable Long vendorId, @RequestBody List<Packages> packages) {
-//	        try {
-//	            Vendor vendor = vendorServ.getVendorById(vendorId);
-//	            
-//	            if (vendor == null) {
-//	                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponseDTO("Vendor not found"));
-//	            }
-//	            
-//	            vendor.getPackages().addAll(packages); 
-//	            Vendor updatedVendor = vendorServ.updateVendor(vendorId, vendor);
-//	            
-//	            return ResponseEntity.status(HttpStatus.CREATED).body(updatedVendor);
-//	        } catch (Exception e) {
-//	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//	                    .body(new ApiResponseDTO("An error occurred while adding packages."));
-//	        }
-//	 }
+
 	
 	// Update Package by Id
 	  @PutMapping("/{id}")
