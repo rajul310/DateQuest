@@ -46,7 +46,7 @@ public class UserController {
 	
 	//sign in user
 	
-	@PostMapping("/signin")
+	@PostMapping("/login")
 	public ResponseEntity<?> authenticateUser(@RequestBody @Valid AuthRequestDTO request) {
 		System.out.println("in auth User " + request);
 		return ResponseEntity.status(HttpStatus.OK)
@@ -61,7 +61,7 @@ public class UserController {
 
 
 	// Add User 
-	@PostMapping
+	@PostMapping("/signup")
 	public ResponseEntity<?> saveUser(@RequestBody @Valid UserDTO transientUser) {
 		try {
 			User savedUser = userServ.addUser(transientUser);

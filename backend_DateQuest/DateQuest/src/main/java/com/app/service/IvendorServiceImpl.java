@@ -33,6 +33,7 @@ public class IvendorServiceImpl implements IvendorService {
 	@Override
 	public Vendor addVendor(VendorDTO transientVendor) {
 		Vendor vendor = mapperVendor.map(transientVendor, Vendor.class);
+		System.out.println(vendor);
 		return vendorRepo.save(vendor);
 	}
 

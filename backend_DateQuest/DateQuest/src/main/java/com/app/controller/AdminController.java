@@ -213,11 +213,15 @@ public class AdminController {
 	}
 	// add vendor
 
-	@PostMapping("/vendors/")
+	@PostMapping("/vendors")
 	public ResponseEntity<?> addVendor(@RequestBody @Valid VendorDTO newVendor) {
 		try {
+			System.out.println(newVendor.toString());
 			Vendor addedVendor = vendorServ.addVendor(newVendor);
+			System.out.println(addedVendor.toString());
+			
 			return ResponseEntity.status(HttpStatus.CREATED).body(addedVendor);
+			
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body(new ApiResponseDTO("An error occurred while adding the vendor."));

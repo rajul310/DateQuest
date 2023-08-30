@@ -22,11 +22,15 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
+@ToString
 
 public class VendorDTO {
 	@JsonProperty(access = Access.READ_ONLY)
@@ -34,7 +38,6 @@ public class VendorDTO {
 
 	@NotBlank(message = "Vendor email is required")
 	@Email(message = "Invalid email format")
-	@Column( nullable = false)
 	private String vEmail;
 
 	@NotBlank(message = "Vendor password is required")

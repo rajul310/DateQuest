@@ -41,7 +41,7 @@ public class PackagesDTO {
     private LocalTime startAt;
 
     @NotNull(message = "Package end time is required")
-    @Future(message = "end time must be a after Start time !!")
+    //@Future(message = "end time must be a after Start time !!")
     @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime endAt;
 

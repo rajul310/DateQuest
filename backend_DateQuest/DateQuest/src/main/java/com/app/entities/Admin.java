@@ -21,42 +21,47 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-
 @Entity
 @Table(name = "Admins")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(exclude = "adminPassword" )
+@ToString(exclude = "adminPassword")
 
-public class Admin extends BaseEntity{
-	
-	@Column(length = 100, nullable = false) 
+public class Admin extends BaseEntity {
+
+	@Column(name = "admin_email", length = 100, nullable = false)
 	private String adminEmail;
-	
-	@Column(length = 300, nullable = false)
+
+	@Column(name = "admin_password", length = 300, nullable = false)
 	private String adminPassword;
-	
+
+	@Column(name = "admin_name")
 	private String adminName;
-	@Column(unique = true)
+
+	@Column(name = "admin_mobile_no", unique = true)
 	private int adminMobileNo;
-	
-	@JsonFormat(pattern="yyyy-MM-dd")
+
+	@Column(name = "admin_dob")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate adminDob;
-	
-	private int adminAge ;
-	
+
+	@Column(name = "admin_age")
+	private int adminAge;
+
 	@Enumerated(EnumType.STRING)
+	@Column(name = "admin_gender")
 	private Gender adminGender;
-	
+
+	@Column(name = "admin_address")
 	private String adminAddress;
-	
-	private String  adminCity;
-	
 
+	@Column(name = "admin_city")
+	private String adminCity;
+
+	@Column(name = "admin_govt_id")
 	private String adminGovtId;
-
 
 }
